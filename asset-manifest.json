@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/09-todo-react-KateKimdo/static/css/main.0836a097.css",
-    "main.js": "/09-todo-react-KateKimdo/static/js/main.1551534c.js",
-    "index.html": "/09-todo-react-KateKimdo/index.html",
-    "main.0836a097.css.map": "/09-todo-react-KateKimdo/static/css/main.0836a097.css.map",
-    "main.1551534c.js.map": "/09-todo-react-KateKimdo/static/js/main.1551534c.js.map"
+    "main.css": "/09-todo-react-kimdo/static/css/main.0836a097.css",
+    "main.js": "/09-todo-react-kimdo/static/js/main.1551534c.js",
+    "index.html": "/09-todo-react-kimdo/index.html",
+    "main.0836a097.css.map": "/09-todo-react-kimdo/static/css/main.0836a097.css.map",
+    "main.1551534c.js.map": "/09-todo-react-kimdo/static/js/main.1551534c.js.map"
   },
   "entrypoints": [
     "static/css/main.0836a097.css",
