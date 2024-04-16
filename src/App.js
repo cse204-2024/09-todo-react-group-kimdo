@@ -9,7 +9,7 @@ function App() {
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    // Fetch todos from the API and set them to state
+    // API
     const fetchTodos = async () => {
       const response = await fetch('https://cse204.work/todos', {
         headers: {
@@ -17,12 +17,11 @@ function App() {
         }
       });
       if (!response.ok) {
-        // Handle errors here
         console.error('Failed to fetch todos:', response.statusText);
         return;
       }
       const data = await response.json();
-      // Sort todos alphabetically by text
+      // alphabetically sort
       const sortedData = data.sort((a, b) => a.text.localeCompare(b.text));
       setTodos(sortedData);
     };
@@ -55,10 +54,10 @@ function App() {
   
 
   const toggleTodo = async (id) => {
-    // Find the current todo item
+    // Find current todo item
     const currentTodo = todos.find(todo => todo.id === id);
     
-    // If the todo is found, proceed to toggle its completion status
+    // completion status
     if (currentTodo) {
       try {
         const response = await fetch(`https://cse204.work/todos/${id}`, {
@@ -76,10 +75,9 @@ function App() {
   
         const updatedTodo = await response.json();
   
-        // Log the updated todo to see if it's correct
         console.log('Updated Todo:', updatedTodo);
   
-        // Update the state with the new toggled todo item
+        // new toggled todo item
         setTodos(prevTodos => prevTodos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo));
       } catch (error) {
         console.error('Failed to toggle todo:', error);
@@ -100,7 +98,7 @@ function App() {
       console.error('Failed to delete todo:', response.statusText);
       return;
     }
-    // Update deleted todo
+    // deleted
     setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
   };
 

@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 
 function AddTodoForm({ onAddTodo }) {
   const [text, setText] = useState('');
-
+  // form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     if (text.trim()) {
       onAddTodo(text);
-      setText(''); 
+      setText(''); // Resets text
     }
   };
-
+  // text input, submit
   return (
     <form onSubmit={handleSubmit} className="task-write">
       <input
@@ -20,6 +20,7 @@ function AddTodoForm({ onAddTodo }) {
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
+      {/* button submit */}
       <button type="submit" className="addButton">Add</button>
     </form>
   );
