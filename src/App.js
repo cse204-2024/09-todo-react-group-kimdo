@@ -1,113 +1,109 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
 import AddTodoForm from './AddTodoForm';
 import TodoList from './TodoList';
+import './App.css';
 
+// API URL and API key
+const API_URL = 'https://cse204.work/todos';
 const API_KEY = 'cb1a13-9e96f7-bd95e1-7e07ab-beff4a';
 
 function App() {
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    // API
-    const fetchTodos = async () => {
-      const response = await fetch('https://cse204.work/todos', {
-        headers: {
-          'x-api-key': API_KEY
-        }
-      });
-      if (!response.ok) {
-        console.error('Failed to fetch todos:', response.statusText);
-        return;
-      }
-      const data = await response.json();
-      // alphabetically sort
-      const sortedData = data.sort((a, b) => a.text.localeCompare(b.text));
-      setTodos(sortedData);
-    };
+    async function loadTodos() {
+      try {
+        const response = await fetch(API_URL, {
+          headers: {'x-api-key': API_KEY}
+        });
 
-    fetchTodos();
+        // if statement
+        if (response.ok) {
+          const todosData = await response.json();
+          // alphabetically
+          setTodos(todosData.sort((a, b) => a.text.localeCompare(b.text)));
+        } else {
+          throw new Error('Unable to fetch todos');
+        }
+      } catch (error) {
+        console.error('Error fetching todos:', error);
+      }
+    }
+
+    loadTodos();
   }, []);
 
-  const addTodo = async (text) => {
-    // API call
-    const response = await fetch('https://cse204.work/todos', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': API_KEY
-      },
-      body: JSON.stringify({ text: text })
-    });
-    if (!response.ok) {
-      console.error('Failed to add todo:', response.statusText);
-      return;
+  const handleAddTodo = async (text) => {
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': API_KEY
+        },
+        body: JSON.stringify({ text })
+      });
+      if (response.ok) {
+        const addedTodo = await response.json();
+        // Update new todo
+        setTodos(prev => [...prev, addedTodo].sort((a, b) => a.text.localeCompare(b.text)));
+      } else {
+        throw new Error('Failed to create todo');
+      }
+    } catch (error) {
+      console.error('Error adding todo:', error);
     }
-    const newTodo = await response.json();
-
-    // new todo
-    setTodos(prevTodos => {
-      const updatedTodos = [...prevTodos, newTodo];
-      return updatedTodos.sort((a, b) => a.text.localeCompare(b.text));
-    });
   };
-  
 
-  const toggleTodo = async (id) => {
-    // Find current todo item
-    const currentTodo = todos.find(todo => todo.id === id);
-    
-    // completion status
-    if (currentTodo) {
+  const handleToggleTodo = async (id) => {
+    const todoToUpdate = todos.find(todo => todo.id === id);
+    if (todoToUpdate) {
       try {
-        const response = await fetch(`https://cse204.work/todos/${id}`, {
+        const response = await fetch(`${API_URL}/${id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
             'x-api-key': API_KEY
           },
-          body: JSON.stringify({ completed: !currentTodo.completed })
+          body: JSON.stringify({ completed: !todoToUpdate.completed })
         });
-  
-        if (!response.ok) {
-          throw new Error(`Error: ${response.statusText}`);
+        if (response.ok) {
+          // completion
+          setTodos(current =>
+            current.map(todo => todo.id === id ? {...todo, completed: !todo.completed} : todo)
+          );
+        } else {
+          throw new Error('Failed to update todo');
         }
-  
-        const updatedTodo = await response.json();
-  
-        console.log('Updated Todo:', updatedTodo);
-  
-        // new toggled todo item
-        setTodos(prevTodos => prevTodos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo));
       } catch (error) {
-        console.error('Failed to toggle todo:', error);
+        console.error('Error toggling todo:', error);
       }
     }
   };
-  
-
-  const deleteTodo = async (id) => {
-    // API
-    const response = await fetch(`https://cse204.work/todos/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'x-api-key': API_KEY
+// delete
+  const handleDeleteTodo = async (id) => {
+    try {
+      const response = await fetch(`${API_URL}/${id}`, {
+        method: 'DELETE',
+        headers: {'x-api-key': API_KEY}
+      });
+      if (response.ok) {
+        // Remove
+        setTodos(current => current.filter(todo => todo.id !== id));
+      } else {
+        throw new Error('Failed to delete todo');
       }
-    });
-    if (!response.ok) {
-      console.error('Failed to delete todo:', response.statusText);
-      return;
+    } catch (error) {
+      console.error('Error deleting todo:', error);
     }
-    // deleted
-    setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
   };
 
   return (
     <div className="App">
       <header className="App-header">
         <h1>ToDo List</h1>
-        <AddTodoForm onAddTodo={addTodo} />
-        <TodoList todos={todos} onToggleTodo={toggleTodo} onDeleteTodo={deleteTodo} />
+        <AddTodoForm onAddTodo={handleAddTodo} />
+        <TodoList todos={todos} onToggleTodo={handleToggleTodo} onDeleteTodo={handleDeleteTodo} />
       </header>
     </div>
   );
