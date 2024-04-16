@@ -1,4 +1,4 @@
-/* styling for body */
+
 body, html {
   margin: 0;
   padding: 0;
@@ -6,72 +6,160 @@ body, html {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center; 
   align-items: center;
   font-family: Arial, Helvetica, sans-serif;
   background-color: #5cb85c;
+}
 
-  /* Styling for .App-header and .content */
 .App-header, .content {
-  background-color: white; 
-  color: black; 
-  min-height: 100vh;
+  position: fixed;
+  top: 170px; 
+  left: 50%; 
+  transform: translateX(-50%);
   width: 90%;
-  max-width: 800px; 
+  max-width: 800px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  background-color: white;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 }
 
-/* Styling for elements marked as completed */
-.completed, .task-box li.completed {
-  text-decoration: line-through;
-  color: #ccc; 
-  opacity: 0.3; 
+/* Header styling */
+h1 {
+  font-family: "Edu NSW ACT Foundation", cursive;
+  margin-bottom: 40px;
 }
 
-/* Form styling */
-form, .task-write {
-  margin-bottom: 20px;
+body {
+  font-size: 16px;
+}
+
+/* task-write */
+.task-write {
   display: flex;
-  width: 100%; 
+  width: 80%; 
+  margin: 0 auto 20px auto;
 }
 
-input[type="text"], .task-write input {
-  padding: 10px;
-  font-size: 16px;
-  border: 2px solid #ddd;
+.task-write input, .task-write button {
+  height: 40px;
   border-radius: 4px;
-  margin-right: 5px; 
 }
 
-button, .delete-btn, .task-write button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #ed4141; 
-  color: white;
+.task-write input {
+  flex-grow: 1;
+  padding: 0 10px;
+  margin-right: 5px;
+  border: 2px solid #ddd;
+
+}
+
+.task-write button {
+  flex-grow: 0;
+  padding: 0 25px;
   border: none;
   border-radius: 4px;
+  background-color: #5cb85c;
+  color: white;
   cursor: pointer;
 }
 
-ul, .task-box {
-  list-style-type: none;
+/* task-box */
+.task-box {
+  list-style: none;
   padding: 0;
+  width: 80%; 
+  margin: 0 auto;
 }
 
-li, .task-box li {
-  margin: 10px 0;
-  padding: 10px;
-  background-color: #f7f7f7; 
-  border-radius: 4px; 
+.task-box li {
+  background-color: #efefef;
+  margin-bottom: 5px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 4px;
 }
 
-li span, .task-box li span {
-  margin-left: 15px; 
+.task-box li.completed span.text {
+  text-decoration: line-through;
+  opacity: 0.3; 
 }
+
+.task-box input[type="checkbox"] {
+  width: 20px; 
+  height: 20px;
+}
+
+.task-box li span {
+  flex-grow: 1;
+  margin: 0 30px; 
+  text-align: left;
+  word-break: break-word;
+}
+
+/* Completed task styles */
+.task-box li.completed {
+  background-color: #bfbfbf; 
+  text-decoration: line-through;
+  color: #666666;
+}
+
+/* Delete Button Styling */
+.delete-btn {
+  padding: 0 15px;
+  border: none;
+  border-radius: 4px;
+  background-color: #ed4141; 
+  color: white; 
+  cursor: pointer;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+/* responsive */
+@media (max-width: 768px) {
+  .App-header, .content {
+    width: 95%;
+    padding: 10px;
+  }
+
+  body {
+    font-size: 14px;
+  }
+
+  .task-box li {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .App-header, .content {
+    width: 100%;
+    border-radius: 0; /* Remove border radius for full width */
+  }
+
+  .task-box li span, .delete-btn {
+    margin-top: 10px;
+  }
+
+  .task-box li span {
+    margin-left: 0;
+  }
+
+  body {
+    font-size: 12px;
+  }
+
+  .task-box li {
+    font-size: 13px;
+  }
 }
