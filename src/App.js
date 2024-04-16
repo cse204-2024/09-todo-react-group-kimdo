@@ -1,18 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import AddTodoForm from './AddTodoForm';
 import TodoList from './TodoList';
 
 function App() {
-  const [todos, setTodos] = useState([]);
+  // todos kept
+  const [todos, setTodos] = useState(() => {
+    const savedTodos = localStorage.getItem('todos');
+    return savedTodos ? JSON.parse(savedTodos) : [];
+  });
 
-// adding new todo.
+  // save todos to storage
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }, [todos]);
+// add
   const addTodo = (todoText) => {
     const newTodo = { id: Date.now(), text: todoText, completed: false };
-    const newTodos = [...todos, newTodo].sort((a, b) => a.text.localeCompare(b.text)); // Sort when adding
-    setTodos(newTodos);
+    setTodos([...todos, newTodo]);
   };
-  // completed status
+// toggle
   const toggleTodo = (id) => {
     setTodos(
       todos.map((todo) =>
@@ -20,24 +27,20 @@ function App() {
       )
     );
   };
-// delete
+  // delete
   const deleteTodo = (id) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
-
-  // alphabet
-  const sortedTodos = todos.sort((a, b) => a.text.localeCompare(b.text));
 
   return (
     <div className="App">
       <header className="App-header">
         <h1>ToDo List</h1>
         <AddTodoForm onAddTodo={addTodo} />
-        <TodoList todos={sortedTodos} onToggleTodo={toggleTodo} onDeleteTodo={deleteTodo} />
+        <TodoList todos={todos} onToggleTodo={toggleTodo} onDeleteTodo={deleteTodo} />
       </header>
     </div>
   );
 }
-
 
 export default App;
