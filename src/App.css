@@ -1,4 +1,3 @@
-
 body, html {
   margin: 0;
   padding: 0;
@@ -6,7 +5,7 @@ body, html {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
   font-family: Arial, Helvetica, sans-serif;
   background-color: #5cb85c;
@@ -14,8 +13,8 @@ body, html {
 
 .App-header, .content {
   position: fixed;
-  top: 170px; 
-  left: 50%; 
+  top: 170px;
+  left: 50%;
   transform: translateX(-50%);
   width: 90%;
   max-width: 800px;
@@ -28,54 +27,46 @@ body, html {
   border-radius: 10px;
 }
 
-/* Header styling */
+/* Header */
 h1 {
   font-family: "Edu NSW ACT Foundation", cursive;
   margin-bottom: 40px;
 }
 
-body {
-  font-size: 16px;
-}
-
-/* task-write */
-.task-write {
-  display: flex;
-  width: 80%; 
-  margin: 0 auto 20px auto;
-}
-
-.task-write input, .task-write button {
-  height: 40px;
-  border-radius: 4px;
-}
-
-.task-write input {
-  flex-grow: 1;
-  padding: 0 10px;
-  margin-right: 5px;
+/* Input */
+.newTask, .task-write input {
   border: 2px solid #ddd;
-
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  margin-right: 5px;
+  flex-grow: 1;
 }
 
-.task-write button {
-  flex-grow: 0;
-  padding: 0 25px;
-  border: none;
-  border-radius: 4px;
+.addButton, .task-write button {
+  padding: 10px 20px;
   background-color: #5cb85c;
   color: white;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
 }
 
-/* task-box */
+.task-write {
+  display: flex;
+  width: 80%;
+  margin: 0 auto 20px auto;
+}
+
+/* Task box styling */
 .task-box {
   list-style: none;
   padding: 0;
-  width: 80%; 
+  width: 86.7%;
   margin: 0 auto;
 }
 
+/* Task list item styling */
 .task-box li {
   background-color: #efefef;
   margin-bottom: 5px;
@@ -86,43 +77,43 @@ body {
   border-radius: 4px;
 }
 
-.task-box li.completed span.text {
-  text-decoration: line-through;
-  opacity: 0.3; 
-}
-
-.task-box input[type="checkbox"] {
-  width: 20px; 
-  height: 20px;
-}
-
+/* Task text styling */
 .task-box li span {
   flex-grow: 1;
-  margin: 0 30px; 
+  margin: 0 30px;
   text-align: left;
   word-break: break-word;
 }
 
-/* Completed task styles */
-.task-box li.completed {
-  background-color: #bfbfbf; 
+.task-box li.completed span {
   text-decoration: line-through;
-  color: #666666;
+  opacity: 0.3;
+  color: rgb(91, 91, 91);
 }
 
-/* Delete Button Styling */
+.task-box li.completed {
+  background-color: #bfbfbf;
+}
+
+/* Checkbox styling */
+.task-box input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+}
+
+/* Delete*/
 .delete-btn {
   padding: 0 15px;
   border: none;
   border-radius: 4px;
-  background-color: #ed4141; 
-  color: white; 
+  background-color: #ed4141;
+  color: white;
   cursor: pointer;
   height: 40px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  text-decoration: none;
+  text-decoration: none; 
 }
 
 /* responsive */
@@ -144,7 +135,7 @@ body {
 @media (max-width: 480px) {
   .App-header, .content {
     width: 100%;
-    border-radius: 0; /* Remove border radius for full width */
+    border-radius: 0;
   }
 
   .task-box li span, .delete-btn {

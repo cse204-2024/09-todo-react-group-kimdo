@@ -1,22 +1,19 @@
 import React from 'react';
+import TodoItem from './TodoItem'; // Assuming TodoItem is a separate component
 
 function TodoList({ todos, onToggleTodo, onDeleteTodo }) {
-      return (
-        <ul className="task-box">
-          {todos.map((todo) => (
-            <li key={todo.id} className={todo.completed ? 'completed' : ''}>
-              <input
-                type="checkbox"
-                checked={todo.completed}
-                onChange={() => onToggleTodo(todo.id)}
-              />
-              <span>{todo.text}</span>
-              <button onClick={() => onDeleteTodo(todo.id)} className="delete-btn">Delete</button>
-            </li>
-          ))}
-        </ul>
-      );
-    }
-
+  return (
+    <ul className="task-box">
+      {todos.map(todo => (
+        <TodoItem
+          key={todo.id}
+          todo={todo}
+          onToggleTodo={onToggleTodo}
+          onDeleteTodo={onDeleteTodo}
+        />
+      ))}
+    </ul>
+  );
+}
 
 export default TodoList;
