@@ -4,32 +4,39 @@ import AddTodoForm from './AddTodoForm';
 import TodoList from './TodoList';
 
 function App() {
-  // todos kept
+  // Initialize todos state from localStorage if available, otherwise start with an empty array.
+  // Sort todos alphabetically during initialization.
   const [todos, setTodos] = useState(() => {
     const savedTodos = localStorage.getItem('todos');
-    return savedTodos ? JSON.parse(savedTodos) : [];
+    const initialTodos = savedTodos ? JSON.parse(savedTodos) : [];
+    return initialTodos.sort((a, b) => a.text.localeCompare(b.text));
   });
 
-  // save todos to storage
+  // Save todos to localStorage whenever the todos state changes.
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos]);
-// add
+
+  // Function to add a new todo and sort todos alphabetically.
   const addTodo = (todoText) => {
     const newTodo = { id: Date.now(), text: todoText, completed: false };
-    setTodos([...todos, newTodo]);
+    const updatedTodos = [...todos, newTodo].sort((a, b) => a.text.localeCompare(b.text));
+    setTodos(updatedTodos);
   };
-// toggle
+
+  // Function to toggle the completion status of a todo and maintain sorting.
   const toggleTodo = (id) => {
-    setTodos(
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
-    );
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    ).sort((a, b) => a.text.localeCompare(b.text));
+    setTodos(updatedTodos);
   };
-  // delete
+
+  // Function to delete a todo and maintain sorting.
   const deleteTodo = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+    const updatedTodos = todos.filter((todo) => todo.id !== id)
+      .sort((a, b) => a.text.localeCompare(b.text));
+    setTodos(updatedTodos);
   };
 
   return (
